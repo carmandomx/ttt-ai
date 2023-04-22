@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import makeCPUMove from "../utils/makeCPUMove";
 import { TileValue } from "../types/types";
 const useTikTakToe = () => {
   const [playerChip, setPlayerChip] = useState("");
@@ -12,10 +13,22 @@ const useTikTakToe = () => {
     const newBoard = [...board];
     newBoard[index] = playerChip as TileValue;
     setBoard(newBoard);
-    // setPlayerChip(playerChip === "X" ? "O" : "X");
+    setIsPlayerTurn(false);
   };
 
-  return { playerChip, board, isPlayerTurn, handleTileClick, setPlayerChip };
+  if (!isPlayerTurn) {
+    makeCPUMove(board, playerChip, setBoard, setIsPlayerTurn);
+  }
+
+  return {
+    playerChip,
+    board,
+    isPlayerTurn,
+    handleTileClick,
+    setBoard,
+    setIsPlayerTurn,
+    setPlayerChip,
+  };
 };
 
 export default useTikTakToe;
