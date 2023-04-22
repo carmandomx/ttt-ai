@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import makeCPUMove from "../utils/makeCPUMove";
+import calculateWinner from "../utils/calculateWinner";
 import { TileValue } from "../types/types";
 const useTikTakToe = () => {
   const [playerChip, setPlayerChip] = useState("");
@@ -7,7 +8,7 @@ const useTikTakToe = () => {
   const [isPlayerTurn, setIsPlayerTurn] = useState<boolean>(true);
 
   const handleTileClick = (index: number): void => {
-    if (board[index] !== null) {
+    if (calculateWinner(board) || board[index] !== null) {
       return;
     }
     const newBoard = [...board];
