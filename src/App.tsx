@@ -1,25 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
 function App() {
+  const [playerChip, setPlayerChip] = useState("");
+
+  const handleChipSelect = (chip: string) => {
+    setPlayerChip(chip);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <section className="App">
+      <h1>Tik Tak Toe</h1>
+      {playerChip === "" ? (
+        <section>
+          <h2>Select your chip</h2>
+          <button onClick={() => handleChipSelect("X")}>X</button>
+          <button onClick={() => handleChipSelect("O")}>O</button>
+        </section>
+      ) : (
+        <h2>You have selected {playerChip}</h2>
+      )}
+    </section>
   );
 }
 
