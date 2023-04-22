@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import useTikTakToe from "./hooks/useTikTakToe";
 import "./App.css";
 
 function App() {
-  const [playerChip, setPlayerChip] = useState("");
+  const { playerChip, board, isPlayerTurn, handleTileClick, setPlayerChip } =
+    useTikTakToe();
 
   const handleChipSelect = (chip: string) => {
     setPlayerChip(chip);
