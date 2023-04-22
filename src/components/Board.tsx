@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './components.css';
 
 // type Tile = 'X' | 'O' | null;
@@ -13,10 +13,30 @@ export const Board = () => {
 
     const handleTileClick = (rowIndex: number, colIndex: number) => {
         if (board[rowIndex][colIndex] === null) {
-            // Player only can pic one chip whean a cell is empty
+
+            // Player only can pick one chip when a cell is empty
             const newBoard = [...board];
             newBoard[rowIndex][colIndex] = 'X'; // Player is X
             setBoard(newBoard);
+    
+            
+            // CPU move
+            const emptyTiles: [number, number][] = [];
+            newBoard.forEach((row, rowIndex) => {
+                row.forEach((tile, colIndex) => {
+                    if (tile === null) {
+                        emptyTiles.push([rowIndex, colIndex]);
+                    }
+                });
+            });
+            const randomTile = emptyTiles[Math.floor(Math.random() * emptyTiles.length)];
+            newBoard[randomTile[0]][randomTile[1]] = 'O'; // CPU is O
+            setBoard(newBoard);
+
+            setInterval(() => {
+
+            }, 1000);
+
         }
     };
       
