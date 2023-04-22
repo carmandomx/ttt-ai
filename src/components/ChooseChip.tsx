@@ -1,4 +1,5 @@
 import useChooseChip from "../hooks/useChooseChip";
+import { Board } from "./Board";
 
 export const ChooseChip = () => {
   const [chosenChip, chooseX, chooseO] = useChooseChip();
@@ -10,9 +11,11 @@ export const ChooseChip = () => {
   return (
     <div>
       <h1>Choose your chip:</h1>
-      <button onClick={chooseX}>X</button>
-      <button onClick={chooseO}>O</button>
+      <button className="bttnChoose" onClick={chooseX}>X</button>
+      <button className="bttnChoose" onClick={chooseO}>O</button>
       <p>The Chip is {chosenChip}</p>
+
+      <Board />
     </div>
   );
 };

@@ -1,16 +1,11 @@
 import './App.css';
+import { Board } from './components/Board';
 import { ChooseChip } from './components/ChooseChip';
 
 function App() {
   return (
     <div className="App">
         <ChooseChip /> 
-
-      {/* <header className="App-header">
-      </header>
-      <main className="App-main">
-        <ChooseChip /> 
-      </main> */}
     </div>
   );
 }
