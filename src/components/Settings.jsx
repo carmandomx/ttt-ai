@@ -21,7 +21,9 @@ const Settings = ({ clearBoard, done, updateUserChar, userChar }) => {
         </div>
       </div>
       <div className='clearBoard'>
-
+        <button onClick={clearBoard}>
+          {done ? 'Play again?' : 'RESTART GAME'}
+        </button>
       </div>
     </div>
   )

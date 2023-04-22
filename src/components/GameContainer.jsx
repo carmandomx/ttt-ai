@@ -27,7 +27,7 @@ const GameContainer = () => {
   }, [gameSquares]);
 
   useEffect(() => {
-    if (compChar === 'o' && boardCleared(gameSquares)) {
+    if (compChar === 'x' && boardCleared(gameSquares)) {
       findBestMove(false);
     }
   })
