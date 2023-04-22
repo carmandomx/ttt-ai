@@ -1,11 +1,10 @@
 import './App.css';
-import { Board } from './components/Board';
-import { ChooseChip } from './components/ChooseChip';
+import GameContainer from './components/GameContainer';
 
 function App() {
   return (
     <div className="App">
-        <ChooseChip /> 
+      <GameContainer />
     </div>
   );
 }
