@@ -8,11 +8,7 @@ type Props = {
   handleTileClick: (index: number) => void;
 };
 
-const TikTakToeBoard: React.FC<Props> = ({
-  board,
-  handleTileClick,
-  playerChip,
-}) => {
+const TikTakToeBoard = ({ board, playerChip, handleTileClick }: Props) => {
   return (
     <section className="board">
       {board.map((tile, index) => (

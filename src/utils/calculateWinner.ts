@@ -19,7 +19,7 @@ const calculateWinner = (board: TileValue[]): calculateWinnerReturnType => {
 
   for (let i = 0; i < WINNING_COMBINATIONS.length; i++) {
     const [a, b, c] = WINNING_COMBINATIONS[i];
-
+    // Check if there is any winning combination on the board
     if (board[a] && board[a] === board[b] && board[a] === board[c]) {
       //   Return winning chip
       return board[a];

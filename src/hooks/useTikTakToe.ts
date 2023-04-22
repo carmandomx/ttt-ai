@@ -7,16 +7,30 @@ const useTikTakToe = () => {
   const [board, setBoard] = useState<TileValue[]>(Array(9).fill(null));
   const [isPlayerTurn, setIsPlayerTurn] = useState<boolean>(true);
   const [winner, setWinner] = useState<TileValue | null>(null);
-  const [draw, setDraw] = useState(false);
+  const [draw, setDraw] = useState<boolean>(false);
+  const [gameStarted, setGameStarted] = useState<boolean>(false);
 
   const handleTileClick = (index: number): void => {
-    if (winner || board[index] !== null) {
+    // The game does not start if you have not picked a chip OR there is a winner OR the square is has already been clicked
+    if (winner || board[index] !== null || !playerChip) {
       return;
     }
     const newBoard = [...board];
     newBoard[index] = playerChip as TileValue;
     setBoard(newBoard);
     setIsPlayerTurn(false);
+
+    // setGameStarted(!gameStarted ? true : false);
+  };
+
+  // Function to reset the game
+  const resetGame = () => {
+    setPlayerChip("");
+    setBoard(Array(9).fill(null));
+    setIsPlayerTurn(true);
+    setWinner(null);
+    setDraw(false);
+    setGameStarted(false);
   };
 
   useEffect(() => {
@@ -32,7 +46,6 @@ const useTikTakToe = () => {
       makeCPUMove(board, playerChip, setBoard, setIsPlayerTurn);
     }
   }, [board, isPlayerTurn, playerChip, winner]);
-  // console.log({ board });
 
   return {
     playerChip,
@@ -40,10 +53,13 @@ const useTikTakToe = () => {
     isPlayerTurn,
     winner,
     draw,
+    gameStarted,
     handleTileClick,
     setBoard,
     setIsPlayerTurn,
     setPlayerChip,
+    resetGame,
+    setGameStarted,
   };
 };
 

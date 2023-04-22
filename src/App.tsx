@@ -5,13 +5,25 @@ import ShowWinner from "./ShowWinner";
 
 function App() {
   // Get the custom hooks
-  const { playerChip, board, winner, draw, handleTileClick, setPlayerChip } =
-    useTikTakToe();
+  const {
+    playerChip,
+    board,
+    winner,
+    draw,
+    gameStarted,
+    handleTileClick,
+    setPlayerChip,
+    resetGame,
+    setGameStarted,
+  } = useTikTakToe();
 
   const handleChipSelect = (chip: string) => {
-    setPlayerChip(chip);
+    // Only allowed to change chip before the game has started
+    if (!gameStarted) {
+      setPlayerChip(chip);
+    }
+    setGameStarted(!gameStarted ? true : gameStarted);
   };
-  console.log({ winner });
 
   return (
     <section className="App">
@@ -21,14 +33,15 @@ function App() {
         <button onClick={() => handleChipSelect("X")}>X</button>
         <button onClick={() => handleChipSelect("O")}>O</button>
       </section>
-      {playerChip && (
-        <TikTakToeBoard
-          playerChip={playerChip}
-          board={board}
-          handleTileClick={handleTileClick}
-        />
-      )}
-      <ShowWinner winner={winner} isDraw={draw} />
+
+      <TikTakToeBoard
+        playerChip={playerChip}
+        board={board}
+        handleTileClick={handleTileClick}
+      />
+      {gameStarted && <p>Cannot change chip once the game has started!</p>}
+
+      <ShowWinner winner={winner} isDraw={draw} resetGame={resetGame} />
     </section>
   );
 }
