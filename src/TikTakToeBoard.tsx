@@ -14,18 +14,17 @@ const TikTakToeBoard: React.FC<Props> = ({
   playerChip,
 }) => {
   return (
-    <div className="board">
+    <section className="board">
       {board.map((tile, index) => (
-        <div
+        <section
           className="tile"
           key={index}
           onClick={() => handleTileClick(index)}
         >
           {tile === "" ? playerChip : tile}
-        </div>
+        </section>
       ))}
-      HELLOOOOOOOOOOOOO
-    </div>
+    </section>
   );
 };
 

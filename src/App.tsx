@@ -1,27 +1,26 @@
-import React, { useState } from "react";
 import useTikTakToe from "./hooks/useTikTakToe";
 import "./App.css";
 import TikTakToeBoard from "./TikTakToeBoard";
+import ShowWinner from "./ShowWinner";
 
 function App() {
   // Get the custom hooks
-  const { playerChip, board, isPlayerTurn, handleTileClick, setPlayerChip } =
+  const { playerChip, board, winner, draw, handleTileClick, setPlayerChip } =
     useTikTakToe();
 
   const handleChipSelect = (chip: string) => {
     setPlayerChip(chip);
   };
-
-  console.log({ board });
+  console.log({ winner });
 
   return (
-    <div className="App">
+    <section className="App">
       <h1>Tik Tak Toe</h1>
-      <div className="chip-select">
+      <section className="chip-select">
         <p>Select your chip:</p>
         <button onClick={() => handleChipSelect("X")}>X</button>
         <button onClick={() => handleChipSelect("O")}>O</button>
-      </div>
+      </section>
       {playerChip && (
         <TikTakToeBoard
           playerChip={playerChip}
@@ -29,32 +28,8 @@ function App() {
           handleTileClick={handleTileClick}
         />
       )}
-    </div>
-    // <section className="App">
-    //   <h1>Tik Tak Toe</h1>
-    //   {playerChip === "" ? (
-    //     <section>
-    //       <h2>Select your chip</h2>
-    //       <button onClick={() => handleChipSelect("X")}>X</button>
-    //       <button onClick={() => handleChipSelect("O")}>O</button>
-    //     </section>
-    //   ) : (
-    //     <section>
-    //       <h2>You are playing as: {playerChip}</h2>
-    //       <section className="board">
-    //         {board.map((value, index) => (
-    //           <section
-    //             key={index}
-    //             className="tile"
-    //             onClick={() => handleTileClick(index)}
-    //           >
-    //             {value}
-    //           </section>
-    //         ))}
-    //       </section>
-    //     </section>
-    //   )}
-    // </section>
+      <ShowWinner winner={winner} isDraw={draw} />
+    </section>
   );
 }
 

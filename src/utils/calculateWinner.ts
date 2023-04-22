@@ -1,6 +1,8 @@
 import { TileValue } from "../types/types";
 
-const calculateWinner = (board: TileValue[]) => {
+type calculateWinnerReturnType = null | undefined | TileValue;
+
+const calculateWinner = (board: TileValue[]): calculateWinnerReturnType => {
   const WINNING_COMBINATIONS = [
     // rows
     [0, 1, 2],
@@ -23,7 +25,14 @@ const calculateWinner = (board: TileValue[]) => {
       return board[a];
     }
   }
-  return null;
+
+  if (!board.includes(null)) {
+    // Return null if there is a draw
+    return null;
+  }
+
+  //   Return undefined if the game is not over yet
+  return undefined;
 };
 
 export default calculateWinner;
