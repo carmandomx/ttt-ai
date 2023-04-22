@@ -5,13 +5,15 @@ import './GameSquare.css'
 const GameSquare = ({ id, char, findBestMove, updateBoard, userChar }) => {
   const [printChar, setPrintChar] = useState('')
 
-  // nicer 'x's and 'o's
+  // Style 'x' and 'o'
   useEffect(() => {
     if (char === 'x') {
       setPrintChar('\u2716')
-    } else if (char === 'o') {
+    } 
+    else if (char === 'o') {
       setPrintChar('\u2B58')
-    } else {
+    } 
+    else {
       setPrintChar(char)
     }
   })

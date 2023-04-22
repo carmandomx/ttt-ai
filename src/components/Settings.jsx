@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import './Settings.css'
 
 const Settings = ({ clearBoard, done, updateUserChar, userChar }) => {
-  // chose whether player is 'x' or 'o' -- game resets on choice.
+  // Choise: 'x' or 'o'
   const onChangeValue = (event) => {
     updateUserChar(event.target.value)
     clearBoard()

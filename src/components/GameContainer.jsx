@@ -4,14 +4,19 @@ import Settings from './Settings.jsx'
 import './GameContainer.css'
 
 const GameContainer = () => {
+  // Initialize board
   const emptyBoard = ['', '', '', '', '', '', '', '', ''];
   const availableBoard = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
   const [gameSquares, setGameSquares] = useState(emptyBoard);
+  // Update available squares
   const [availableSquares, setAvailableSquares] = useState(availableBoard);
+  // Who won the game
   const [hasWon, setHasWon] = useState('');
+  // Chips X O
   const [userChar, setUserChar] = useState('o');
   const [compChar, setCompChar] = useState('x');
+  // Msg to player
   const [message, setMessage] = useState('');
 
   const maxDepth = 4;
@@ -27,6 +32,7 @@ const GameContainer = () => {
     }
   })
 
+  // AI play
   useEffect(() => {
     if (userChar === 'x') {
       setCompChar('o');
@@ -36,6 +42,7 @@ const GameContainer = () => {
     }
   }, [userChar]);
 
+  // Set who won
   useEffect(() => {
     if (hasWon === 'tie') {
       setMessage('it is a tie!')
@@ -51,16 +58,19 @@ const GameContainer = () => {
     }
   })
 
-  // check for board state
+  // Check board state
   const checkForState = (squares = gameSquares) => {
     const wins = [
-      [0, 1, 2], // horizontals
+      // horizontals
+      [0, 1, 2], 
       [3, 4, 5],
       [6, 7, 8],
-      [0, 3, 6], // verticals
+       // verticals
+      [0, 3, 6],
       [1, 4, 7],
       [2, 5, 8],
-      [0, 4, 8], // diagonals
+      // diagonals
+      [0, 4, 8], 
       [2, 4, 6]
     ]
 
@@ -80,12 +90,13 @@ const GameContainer = () => {
       }
     }
 
-    // board is full, no more moves, win check failed, must tie
+    // Board is full with chips so no more moves
+    // Win review failed, it's a tie
     if (gameSquares.every((sq) => sq !== '')) {
       return 'tie';
     }
 
-    // board is not full and win check failed
+    // Board isn't full and win review failed
     return '';
   }
 
@@ -97,13 +108,13 @@ const GameContainer = () => {
     updateAvailableSquares(idx);
   }
 
-  // update filled squares
+  // Ppdate full squares
   const updateUsedSquares = (idx, val) => {
     gameSquares.splice(idx, 1, val);
     setGameSquares([...gameSquares]);
   }
 
-  // update available squares
+  // Update available squares
   const updateAvailableSquares = (idx) => {
     const index = availableSquares.indexOf(idx);
     if (index > -1) {
@@ -112,13 +123,13 @@ const GameContainer = () => {
     setAvailableSquares([...availableSquares]);
   }
 
-  // board clean
+  // Board is clean
   const clearBoard = () => {
     setGameSquares(emptyBoard);
     setAvailableSquares(availableBoard);
   }
 
-  // board is empty
+  // Board is empty
   const boardCleared = (board) => board.every((sq) => sq === '');
 
   // recursive minimax algorithm
@@ -126,13 +137,14 @@ const GameContainer = () => {
   // https://www.neverstopbuilding.com/blog/minimax
   // https://en.wikipedia.org/wiki/Minimax
   const findBestMove = (forMax = true, depth = 0, gs = gameSquares, as = availableSquares) => {
-    // clear if no depth, that means we're starting from square one.
+    
+    // We are starting from square one
     if (depth === 0) {
       decisionTree.clear();
     }
 
-    // We have proceeded to an endpoint in the currently running scenario.
-    // return value of this path.
+    // Endpoint in currently running scenario.
+    // Return value of this path.
     if (checkForState(gs) !== '' || depth === maxDepth) {
       // time for some arbitrary decision making
       if (checkForState(gs) === 'o') {
@@ -201,7 +213,9 @@ const GameContainer = () => {
             updateUserChar={setUserChar}
             userChar={userChar}
           />
-
+          <div className='messageContainer'>
+            {message}
+          </div>
         </div>
       <div className='mainContainer'>
         <GameBoard
