@@ -1,5 +1,4 @@
 import { TileValue } from "./types/types";
-import useTikTakToe from "./hooks/useTikTakToe";
 
 type Props = {
   winner: TileValue | null;

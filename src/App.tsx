@@ -29,9 +29,19 @@ function App() {
     <section className="App">
       <h1>Tik Tak Toe</h1>
       <section className="chip-select">
-        <p>Select your chip:</p>
-        <button onClick={() => handleChipSelect("X")}>X</button>
-        <button onClick={() => handleChipSelect("O")}>O</button>
+        <p className={`select-chip ${!gameStarted && "not-started"}`}>
+          Select your chip:
+        </p>
+        {["X", "O"].map((chip) => (
+          <button
+            className="chip-button"
+            onClick={() => {
+              handleChipSelect(`${chip}`);
+            }}
+          >
+            {chip}
+          </button>
+        ))}
       </section>
 
       <TikTakToeBoard

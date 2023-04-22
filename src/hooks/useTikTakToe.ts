@@ -2,6 +2,7 @@ import { TileValue } from "./../types/types";
 import { useState, useEffect } from "react";
 import makeCPUMove from "../utils/makeCPUMove";
 import calculateWinner from "../utils/calculateWinner";
+// import xSound from "";
 const useTikTakToe = () => {
   const [playerChip, setPlayerChip] = useState("");
   const [board, setBoard] = useState<TileValue[]>(Array(9).fill(null));
@@ -19,8 +20,6 @@ const useTikTakToe = () => {
     newBoard[index] = playerChip as TileValue;
     setBoard(newBoard);
     setIsPlayerTurn(false);
-
-    // setGameStarted(!gameStarted ? true : false);
   };
 
   // Function to reset the game

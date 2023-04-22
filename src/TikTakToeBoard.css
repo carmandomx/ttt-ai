@@ -2,10 +2,14 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+  max-width: 400px;
+  margin: 3rem auto;
+  background-color: white;
 }
 .tile {
-  background-color: #eee;
-  border: 1px solid #ccc;
+  background-color: black;
+  color: white;
+  /* border: 1px solid #ccc; */
   display: flex;
   justify-content: center;
   align-items: center;

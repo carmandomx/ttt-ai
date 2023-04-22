@@ -1,4 +1,3 @@
-import React from "react";
 import { TileValue } from "./types/types";
 import "./TikTakToeBoard.css";
 
