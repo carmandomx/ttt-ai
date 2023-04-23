@@ -1,25 +1,58 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import useTikTakToe from "./hooks/useTikTakToe";
+import "./App.css";
+import TikTakToeBoard from "./TikTakToeBoard";
+import ShowWinner from "./ShowWinner";
 
 function App() {
+  // Get the custom hooks
+  const {
+    playerChip,
+    board,
+    winner,
+    draw,
+    gameStarted,
+    handleTileClick,
+    setPlayerChip,
+    resetGame,
+    setGameStarted,
+  } = useTikTakToe();
+
+  const handleChipSelect = (chip: string) => {
+    // Only allowed to change chip before the game has started
+    if (!gameStarted) {
+      setPlayerChip(chip);
+    }
+    setGameStarted(!gameStarted ? true : gameStarted);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+    <section className="App">
+      <h1>Tik Tak Toe</h1>
+      <section className="chip-select">
+        <p className={`select-chip ${!gameStarted && "not-started"}`}>
+          Select your chip:
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+        {["X", "O"].map((chip) => (
+          <button
+            className="chip-button"
+            onClick={() => {
+              handleChipSelect(`${chip}`);
+            }}
+          >
+            {chip}
+          </button>
+        ))}
+      </section>
+
+      <TikTakToeBoard
+        playerChip={playerChip}
+        board={board}
+        handleTileClick={handleTileClick}
+      />
+      {gameStarted && <p>Cannot change chip once the game has started!</p>}
+
+      <ShowWinner winner={winner} isDraw={draw} resetGame={resetGame} />
+    </section>
   );
 }
 
