@@ -1,25 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Board } from './components/Board';
+import { Square } from './components/Square';
+import { useState } from 'react';
 
+const defaultSquares = (length=9): any[] => {
+  return Array(length).fill(null);
+}
 function App() {
+  const [squares, setSquares] = useState(defaultSquares());
+  const handleSquareClick=(index:number)=>{
+    let newSquares = squares;
+    newSquares[index] = "X";
+    setSquares([...newSquares]);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <Board>
+       {squares.map((square,index:number) => 
+        <Square  
+        x={square==="X"?1:0}
+        o={square==="O"?1:0}
+        onClick = {()=> handleSquareClick(index)} />)}
+      </Board>
+    </main>
   );
 }
 
