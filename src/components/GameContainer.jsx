@@ -99,6 +99,7 @@ const GameContainer = () => {
     // Board isn't full and win review failed
     return '';
   }
+  
 
   const updateBoard = (idx, asPlayer = true) => {
     asPlayer
@@ -132,10 +133,7 @@ const GameContainer = () => {
   // Board is empty
   const boardCleared = (board) => board.every((sq) => sq === '');
 
-  // recursive minimax algorithm
-  // https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-3-tic-tac-toe-ai-finding-optimal-move/
-  // https://www.neverstopbuilding.com/blog/minimax
-  // https://en.wikipedia.org/wiki/Minimax
+  // Recursive minimax algorithm
   const findBestMove = (forMax = true, depth = 0, gs = gameSquares, as = availableSquares) => {
     
     // We are starting from square one
@@ -146,38 +144,36 @@ const GameContainer = () => {
     // Endpoint in currently running scenario.
     // Return value of this path.
     if (checkForState(gs) !== '' || depth === maxDepth) {
-      // time for some arbitrary decision making
+      // Time for some arbitrary decision making
       if (checkForState(gs) === 'o') {
-        // if the move benefits o, it is maximized (rated by positivity)
+        // If the move benefits o, it is max
         return 100 - depth
       } else if (checkForState(gs) === 'x') {
-        // if the move benefits x, it is minimized (rated by negativity)
+        // If the move benefits x, it is min
         return -100 + depth
       } else {
         return 0
       }
     }
 
-    // if forMax, o benefits, !forMax, x benefits
+    // if forMax, o benefits then !forMax, x benefits
     // set base minimax value.
     let base = forMax ? -100 : 100;
     const char = forMax ? 'o' : 'x';
 
     for (var idxAsVal of as) {
-      // set up a dummy game board to iterate over all scenarios
+      // Set up a imaginary game board to iterate over all scenarios (like my anxiety)
       const squares = [...gs];
       const openSquares = [...as];
-      // try a move and subsequent recursion
+      // Try a move and subsequent recursion
       squares.splice(idxAsVal, 1, char);
       openSquares.splice(idxAsVal, 1);
       const nodeVal = findBestMove(!forMax, depth + 1, squares, openSquares);
 
       base = forMax ? Math.max(base, nodeVal) : Math.min(base, nodeVal);
 
-      // when we are not recursing, do this.
+      // Ehen we are not recursing, then do this.
       if (depth === 0) {
-        // If we already have the value, add an index as another possible move
-        // at that value.
         const moves = decisionTree.has(nodeVal)
           ? [...decisionTree.get(nodeVal), idxAsVal]
           : [idxAsVal]
@@ -186,10 +182,9 @@ const GameContainer = () => {
       }
     }
 
-    // when we are not recursing, do this.
+      // Ehen we are not recursing, then do this.
     if (depth === 0) {
-      // remember that collection of indexes we made when value was the same?
-      // now we arbitrarily choose one.
+      // Now arbitrarily choose one.
 
       const moveArr = boardCleared(as) ? [0, 2, 4, 6, 8] : decisionTree.get(base);
       const move = moveArr[Math.floor(Math.random() * moveArr.length)];

@@ -19,6 +19,14 @@ const Settings = ({ clearBoard, done, updateUserChar, userChar }) => {
           <input type='radio' value='o' name='userChar' defaultChecked={userChar === 'o'} />
           <span style={{ marginTop: '8px' }}>{'\u2B58'}</span>
         </div>
+        <div className='radioButton'>
+          <input type='radio' value='Normal' name='Normal' defaultChecked={userChar === 'Normal'}/>
+          <span style={{ marginTop: '3px' }}>Normal</span>
+        </div>
+        <div className='radioButton'>
+          <input type='radio' value='MinMax' name='MinMax'/>
+          <span style={{ marginTop: '8px' }}>MinMax</span>
+        </div>
       </div>
       <div className='clearBoard'>
         <button onClick={clearBoard}>
