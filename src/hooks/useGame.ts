@@ -58,18 +58,29 @@ export const useGame = (playerChip: 'X' | 'O') => {
     const [isPlayerTurn, setIsPlayerTurn] = useState<boolean>(true);
     const aiChip = playerChip === 'X' ? 'O' : 'X';
     const [gameOver, setGameOver] = useState<boolean>(false);
+    const [gameResult, setGameResult] = useState<string | null>(null);
+
   
     useEffect(() => {
-      if (checkWin(board, playerChip) || checkWin(board, aiChip)) {
-        setGameOver(true);
-      } else {
-        if (!isPlayerTurn) {
-          const newBoard = makeAiMove(board, aiChip);
-          setBoard(newBoard);
-          setIsPlayerTurn(true);
+        if (checkWin(board, playerChip)) {
+          setGameOver(true);
+          setGameResult('Player wins');
+        } else if (checkWin(board, aiChip)) {
+          setGameOver(true);
+          setGameResult('AI wins');
+        } else if (board.every(row => row.every(cell => cell !== null))) {
+          setGameOver(true);
+          setGameResult('Draw');
+        } else {
+          if (!isPlayerTurn) {
+            const newBoard = makeAiMove(board, aiChip);
+            setBoard(newBoard);
+            setIsPlayerTurn(true);
+          }
         }
-      }
-    }, [board, aiChip, isPlayerTurn, playerChip]);
+      }, [board, aiChip, isPlayerTurn, playerChip]);
+      
   
-    return { board, setBoard, isPlayerTurn, setIsPlayerTurn, gameOver };
+      return { board, setBoard, isPlayerTurn, setIsPlayerTurn, gameOver, gameResult };
+
   };
