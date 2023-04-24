@@ -1,38 +1,214 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body{
   display: flex;
-  flex-direction: column;
+  flex-flow: column nowrap;
   align-items: center;
+  background-color: rgb(221, 221, 221);
+}
+.chip-buttons{
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 0.5em;
+
+}
+.chip-option{
   color: white;
+  background-color: black;
+  border-radius: 4px;
+  flex-grow: 1;
+  
+
 }
 
-.App-link {
-  color: #61dafb;
+.results{
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.restart{
+  color: white;
+  background-color: black;
+  border-radius: 4px;
+}
+
+.tile00{
+  border: none;
+  background-color: white;
+  border-right-style:solid ;
+  border-bottom-style:solid ;
+
+  border-right-width:3px ;
+  border-bottom-width:3px ;
+
+  border-right-color: black;
+  border-bottom-color: black;
+
+  
+  width: 5em;
+  height: 5em;
+}
+
+.tile02{
+  border: none;
+  background-color: white;
+  border-left-style:solid ;
+  border-bottom-style:solid ;
+
+  border-left-width:3px ;
+  border-bottom-width:3px ;
+
+  border-left-color: black;
+  border-bottom-color: black;
+
+  
+  width: 5em;
+  height: 5em;
+}
+
+.tile20{
+  border: none;
+  background-color: white;
+  border-right-style:solid ;
+  border-top-style:solid ;
+
+  border-right-width:3px ;
+  border-top-width:3px ;
+
+  border-right-color: black;
+  border-top-color: black;
+
+  
+  width: 5em;
+  height: 5em;
+}
+
+.tile22{
+  border: none;
+  background-color: white;
+  border-left-style:solid ;
+  border-top-style:solid ;
+
+  border-left-width:3px ;
+  border-top-width:3px ;
+
+  border-left-color: black;
+  border-top-color: black;
+
+  
+  width: 5em;
+  height: 5em;
+}
+
+.tile01{
+  border: none;
+  background-color: white;
+  border-left-style:solid ;
+  border-bottom-style:solid ;
+  border-right-style: solid;
+
+  border-left-width:3px ;
+  border-bottom-width:3px ;
+  border-right-width:3px ;
+
+  border-left-color: black;
+  border-bottom-color: black;
+  border-right-color: black;
+
+  
+  width: 5em;
+  height: 5em;
+}
+
+.tile10{
+  border: none;
+  background-color: white;
+  border-top-style:solid ;
+  border-bottom-style:solid ;
+  border-right-style: solid;
+
+  border-top-width:3px ;
+  border-bottom-width:3px ;
+  border-right-width:3px ;
+
+  border-top-color: black;
+  border-bottom-color: black;
+  border-right-color: black;
+
+  
+  width: 5em;
+  height: 5em;
+}
+
+.tile12{
+  border: none;
+  background-color: white;
+  border-top-style:solid ;
+  border-bottom-style:solid ;
+  border-left-style: solid;
+
+  border-top-width:3px ;
+  border-bottom-width:3px ;
+  border-left-width:3px ;
+
+  border-top-color: black;
+  border-bottom-color: black;
+  border-left-color: black;
+
+  
+  width: 5em;
+  height: 5em;
+}
+
+.tile21{
+  border: none;
+  background-color: white;
+  border-top-style:solid ;
+  border-right-style:solid ;
+  border-left-style: solid;
+
+  border-top-width:3px ;
+  border-right-width:3px ;
+  border-left-width:3px ;
+
+  border-top-color: black;
+  border-right-color: black;
+  border-left-color: black;
+
+  
+  width: 5em;
+  height: 5em;
+}
+
+.tile11{
+  border: none;
+  background-color: white;
+  border-top-style:solid ;
+  border-right-style:solid ;
+  border-left-style: solid;
+  border-bottom-style: solid;
+
+  border-top-width:3px ;
+  border-right-width:3px ;
+  border-left-width:3px ;
+  border-bottom-width:3px ;
+
+  border-top-color: black;
+  border-right-color: black;
+  border-left-color: black;
+  border-bottom-color: black;
+
+  
+  width: 5em;
+  height: 5em;
+}
+
+.rows{
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.cols{
+  display: flex;
+  flex-flow: row nowrap;
 }
