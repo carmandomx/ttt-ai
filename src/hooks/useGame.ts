@@ -1,35 +1,54 @@
 import { useState, useEffect } from 'react';
 
-type BoardState = (null | 'X' | 'O')[][];
+type BoardState = Array<Array<'X' | 'O' | null>>;
 
-const getEmptyCells = (board: BoardState) => {
-  const emptyCells: Array<[number, number]> = [];
-
+const checkWin = (board: BoardState, chip: 'X' | 'O'): boolean => {
+  // Check rows
   for (let row = 0; row < 3; row++) {
-    for (let col = 0; col < 3; col++) {
-      if (board[row][col] === null) {
-        emptyCells.push([row, col]);
-      }
+    if (board[row][0] === chip && board[row][1] === chip && board[row][2] === chip) {
+      return true;
     }
   }
 
-  return emptyCells;
-};
-
-const makeAiMove = (board: BoardState, aiChip: 'X' | 'O') => {
-  const emptyCells = getEmptyCells(board);
-
-  if (emptyCells.length === 0) {
-    return board;
+  // Check columns
+  for (let col = 0; col < 3; col++) {
+    if (board[0][col] === chip && board[1][col] === chip && board[2][col] === chip) {
+      return true;
+    }
   }
 
-  const [row, col] = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+  // Check diagonals
+  if (board[0][0] === chip && board[1][1] === chip && board[2][2] === chip) {
+    return true;
+  }
+  if (board[0][2] === chip && board[1][1] === chip && board[2][0] === chip) {
+    return true;
+  }
 
-  const newBoard = [...board];
-  newBoard[row][col] = aiChip;
-  return newBoard;
+  return false;
 };
 
+const makeAiMove = (board: BoardState, chip: 'X' | 'O'): BoardState => {
+    const availableMoves: Array<[number, number]> = [];
+  
+    for (let row = 0; row < 3; row++) {
+      for (let col = 0; col < 3; col++) {
+        if (board[row][col] === null) {
+          availableMoves.push([row, col]);
+        }
+      }
+    }
+  
+    if (availableMoves.length > 0) {
+      const randomMove = availableMoves[Math.floor(Math.random() * availableMoves.length)];
+      const newBoard = [...board];
+      newBoard[randomMove[0]][randomMove[1]] = chip;
+      return newBoard;
+    }
+  
+    return board;
+  };
+  
 export const useGame = (playerChip: 'X' | 'O') => {
     const [board, setBoard] = useState<BoardState>([
       [null, null, null],
@@ -38,14 +57,19 @@ export const useGame = (playerChip: 'X' | 'O') => {
     ]);
     const [isPlayerTurn, setIsPlayerTurn] = useState<boolean>(true);
     const aiChip = playerChip === 'X' ? 'O' : 'X';
+    const [gameOver, setGameOver] = useState<boolean>(false);
   
     useEffect(() => {
-      if (!isPlayerTurn) {
-        const newBoard = makeAiMove(board, aiChip);
-        setBoard(newBoard);
-        setIsPlayerTurn(true);
+      if (checkWin(board, playerChip) || checkWin(board, aiChip)) {
+        setGameOver(true);
+      } else {
+        if (!isPlayerTurn) {
+          const newBoard = makeAiMove(board, aiChip);
+          setBoard(newBoard);
+          setIsPlayerTurn(true);
+        }
       }
-    }, [board, aiChip, isPlayerTurn]);
+    }, [board, aiChip, isPlayerTurn, playerChip]);
   
-    return { board, setBoard, isPlayerTurn, setIsPlayerTurn };
+    return { board, setBoard, isPlayerTurn, setIsPlayerTurn, gameOver };
   };
