@@ -2,7 +2,7 @@ export const getCleverMoves = (
   board: Array<Array<string | null>>,
   player: string,
   checkWinner: (board: Array<Array<string | null>>) => string | null
-) : [number, number] => {
+): [number, number] => {
   const smartMoves: Array<[number, number]> = [];
   //check winning move for the computer
   board.forEach((row, rowIndex) =>
@@ -14,25 +14,25 @@ export const getCleverMoves = (
           smartMoves.unshift([rowIndex, colIndex]);
         }
       }
+      return [];
     })
   );
   //Opponent moves for winning
   const opponent = player === "X" ? "O" : "X";
 
-  board.some((row, rowIndex) =>
-    row.some((col, colIndex) => {
+  board.some((row, rowIndex) => {
+    return row.some((col, colIndex) => {
       if (!board[rowIndex][colIndex]) {
-        const clonedBoard = board.map((r) => [...r]);
-        //need fill clonedBoard
+        const clonedBoard = board.map((r) => [...r]); //need fill clonedBoard
         clonedBoard[rowIndex][colIndex] = opponent;
         if (checkWinner(clonedBoard) === opponent) {
           smartMoves.push([rowIndex, colIndex]);
           return true;
         }
-        return false;
       }
-    })
-  );
+      return false;
+    });
+  });
   //winning move is found
   if (smartMoves.length > 0) {
     return smartMoves[0];
