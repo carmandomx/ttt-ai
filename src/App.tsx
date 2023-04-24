@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {useState} from "react";
+import "./App.css";
+import { TicTacToe } from "./components/tc-tac-toe";
+import { AITicTacToe } from "./components/AI-tictactoe";
 
 function App() {
+  const [showTicTacToe, setShowTicTacToe] = useState<boolean>(false);
+  const [showAITicTacToe, setShowAITicTacToe] = useState<boolean>(false);
+
+  const handleEasyClick = () =>{
+    setShowTicTacToe(true);
+    setShowAITicTacToe(false);
+    
+  }
+  const handleHardClick = () =>{
+    setShowTicTacToe(false);
+    setShowAITicTacToe(true);
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <main>
+        <button className="reset" onClick={handleEasyClick}> Easy Level</button>
+        <button className="reset" onClick={handleHardClick}> Hard Level</button>
+        {showTicTacToe && <TicTacToe />}
+        {showAITicTacToe && <AITicTacToe />}
+      </main>
     </div>
   );
 }
