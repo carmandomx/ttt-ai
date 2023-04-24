@@ -7,7 +7,7 @@ interface BoardProps {
   onClick: (i: number) => void;
 }
 
-const Board: React.FC<BoardProps> = ({ squares, onClick }) => {
+const Board: React.FC<BoardProps> = ({ squares, onClick }) => {//rendering the boards
   const renderSquare = (i: number) => {
     return <Square value={squares[i]} onClick={() => onClick(i)} />;
   };

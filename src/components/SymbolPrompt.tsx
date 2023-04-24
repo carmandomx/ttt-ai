@@ -5,7 +5,7 @@ interface SymbolPromptProps {
   onSymbolSelect: (symbol: string) => void;
 }
 
-const SymbolPrompt: React.FC<SymbolPromptProps> = ({ onSymbolSelect }) => {
+const SymbolPrompt: React.FC<SymbolPromptProps> = ({ onSymbolSelect }) => {//choosing symbols
   return (
     <div className="symbol-prompt">
       <div><h1>Choose your symbol:</h1></div>

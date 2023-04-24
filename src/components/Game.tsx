@@ -84,6 +84,7 @@ function calculateWinner(squares: string[]): string | null {
     return null;
   }
 
+  //check if the board is full
   function isBoardFull(squares: string[]): boolean {
     return squares.every((square) => square !== '');
   }
