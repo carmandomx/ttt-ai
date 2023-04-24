@@ -5,6 +5,9 @@ import { Square } from './components/Square';
 import { Button } from './components/Buttons';
 import { useState, useEffect } from 'react';
 import useGameState from './hooks/useGameState';
+import useChipState from './hooks/useChipState';
+import usePcState from './hooks/usePcState';
+import useWinnerState from './hooks/useWinnerState';
 
 const defaultSquares = (length=9): any[] => {
   return Array(length).fill(null);
@@ -18,8 +21,10 @@ const winnerLines = [
 
 function App() {
   const [squares, setSquares] = useState(defaultSquares());
-  const [winner,setWinner] = useState("");
+  const [winnerState, setWinnerX, setWinnerO, setWinnerDraw] = useWinnerState();
   const [gameState, startGame, endGame] = useGameState();
+  const [chipState, setUserChipX, setUserChipO] = useChipState();
+  const [pcState, setPcChipX, setPcChipO] = usePcState();
 
 
   const handleStartGame = () => {
@@ -29,6 +34,30 @@ function App() {
   const handleEndGame = () => {
     endGame();
   };
+
+  const cleanBoard = ()=>{
+    setSquares(defaultSquares())
+  }
+
+  const reStartGame = () =>{
+    handleEndGame();
+    cleanBoard();
+    
+    
+    
+  }
+
+  const setUserChipToX = ()=>{
+    setUserChipX();
+    setPcChipO();
+    handleStartGame();
+    
+  }
+  const setUserChipToO = ()=>{
+    setUserChipO();
+    setPcChipX();
+    handleStartGame();
+  }
 
   useEffect(() => {
     const isComputerTurn = squares.filter(square => square !== null).length % 2 === 1;
@@ -45,26 +74,43 @@ function App() {
       .map((square,index) => square === null ? index : null)
       .filter(val => val !== null);
 
-    const playerWon = linesThatAre('X', 'X', 'X').length > 0;
-    const computerWon = linesThatAre('O', 'O', 'O').length > 0;
+    const playerWon = linesThatAre(chipState, chipState, chipState).length > 0;
+    const computerWon = linesThatAre(pcState, pcState, pcState).length > 0;
+    const isNullsquare = (element:any) => element  === null;
+    const draw = squares.some(isNullsquare);
 
     if (playerWon) {
-      setWinner('X');
+      if(chipState==='X'){
+        setWinnerX();
+      }else{
+        setWinnerO();
+      }
+      
       handleEndGame();
     }
     if (computerWon) {
-      setWinner('O');
+      if(pcState==='O'){
+        setWinnerO();
+      }else{
+        setWinnerX();
+      }
       handleEndGame();
+    }
+
+    if(!draw){
+      setWinnerDraw();
+      handleEndGame();
+      console.log(winnerState)
     }
 
     const putComputerAt = (index:any) => {
       let newSquares = squares;
-      newSquares[index] = 'O';
+      newSquares[index] = pcState;
       setSquares([...newSquares]);
     };
     if(isComputerTurn){
       
-      const winingLines = linesThatAre('O', 'O', null);
+      const winingLines = linesThatAre(pcState, pcState, null);
       if (winingLines.length > 0) {
         const winIndex = winingLines[0].filter(index => squares[index] === null)[0];
         setTimeout(() => {
@@ -73,7 +119,7 @@ function App() {
         return;
       }
 
-      const linesToBlock = linesThatAre('X', 'X', null);
+      const linesToBlock = linesThatAre(chipState, chipState, null);
       if (linesToBlock.length > 0) {
         const blockIndex = linesToBlock[0].filter(index => squares[index] === null)[0];
         setTimeout(() => {
@@ -82,7 +128,7 @@ function App() {
         return;
       }
 
-      const linesToContinue = linesThatAre('O', null, null);
+      const linesToContinue = linesThatAre(pcState, null, null);
       if (linesToContinue.length > 0) {
         setTimeout(() => {
           putComputerAt(linesToContinue[0].filter(index => squares[index] === null)[0]);
@@ -100,11 +146,11 @@ function App() {
 
 
   const handleSquareClick=(index:number)=>{
-    if(gameState=="active"){
+    if(gameState==="active"){
       const isPlayerTurn = squares.filter(square => square != null).length % 2 === 0;
       if(isPlayerTurn){
         let newSquares = squares;
-        newSquares[index] = "X";
+        newSquares[index] = chipState;
         setSquares([...newSquares]);
       }
     }
@@ -112,8 +158,11 @@ function App() {
   }
   return (
     <main>
-      <Button text='X' onClick={handleStartGame}/>
-      <Button text='Y' onClick={handleStartGame}/>
+      <h1>Tic Tac Toe</h1>
+      <div className='button-container'>
+        <Button className='X' text='X' onClick={setUserChipToX}/>
+        <Button className='O'text='O' onClick={setUserChipToO}/>
+      </div>
       <Board>
        {squares.map((square,index:number) => 
         <Square  
@@ -124,15 +173,20 @@ function App() {
         o={square==="O"?1:0}
         onClick = {()=> handleSquareClick(index)} />)}
       </Board>
-      <Button text='Restart Game' onClick={handleEndGame}/>
-      {!!winner && winner === 'X' && (
+      <Button className='Restart' text='Restart Game' onClick={ reStartGame}/>
+      {!!winnerState && winnerState === chipState && (
         <div className="result green">
           You WON!
         </div>
       )}
-      {!!winner && winner === 'O' && (
+      {!!winnerState && winnerState === pcState && (
         <div className="result red">
           You LOST!
+        </div>
+      )}
+      {!!winnerState && winnerState === "Draw" && (
+        <div className="result red">
+          Its a Draw!
         </div>
       )}
     </main>
