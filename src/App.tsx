@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Game from './components/Game';
+import SymbolPrompt from './components/SymbolPrompt';
+import './App.css'
 
-function App() {
+const App: React.FC = () => {
+  const [playerSymbol, setPlayerSymbol] = useState('');
+
+  const handleSymbolSelect = (symbol: string) => {
+    setPlayerSymbol(symbol);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='appTitle'><h1>TIC TAC TOE APP</h1></div>
+      <div>
+      {playerSymbol ? (
+        <Game playerSymbol={playerSymbol} />
+      ) : (
+        <SymbolPrompt onSymbolSelect={handleSymbolSelect} />
+      )}
+      </div>
     </div>
   );
-}
+};
 
 export default App;

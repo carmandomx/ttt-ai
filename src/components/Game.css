@@ -1,0 +1,28 @@
+.game {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .game-board {
+    margin: 18px;
+    margin-bottom: 0px;
+  }
+  
+  .game-info {
+    text-align: center;
+  }
+
+  h2  {
+    margin: 0px;
+  }
+
+  .rstButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 16px;
+  }
+
+  .restartBtn {
+    font-size: 16px;
+  }
