@@ -2,4 +2,4 @@
 
 You must make the decision on the heirachy of your application, don't overload a component, what does this mean? Whenever you feel that a component is doing too much try to split it into multiples components.
 
-link of Demo: https://eclectic-salmiakki-905035.netlify.app/
+link of Demo: https://andreisantos-ksquare.github.io/ttt-ai/
