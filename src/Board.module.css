@@ -1,0 +1,32 @@
+.Board {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.BordRow {
+    display: flex;
+}
+
+.Cell {
+    line-height: 1;
+    width: 50px;
+    height: 50px;
+    border-radius: 0;
+    border: none;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 50px;
+    font-weight: 700;
+    background-color: blue;
+    outline: none;
+    color: white;
+    margin: 8px;
+    box-shadow: 0px 0px 7px 0px rgb(44, 255, 111);
+}
+
+.Cell:hover {
+    background-color: rgba(0, 0, 255, 0.5);
+    cursor: pointer;
+}
