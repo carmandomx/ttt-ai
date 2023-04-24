@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Board from './components/Board';
 import './App.css';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <h1>Tik Tak Toe vs A.I.</h1>
         <p>You have chosen: {chip}</p>
       </header>
+      <Board chip={chip as 'X' | 'O'} />
     </div>
   );
 }
