@@ -22,9 +22,7 @@ const GameContainer = () => {
   const maxDepth = 4;
   const decisionTree = new Map();
 
-  useEffect(() => {
-    setHasWon(checkForState());
-  }, [gameSquares]);
+
 
   useEffect(() => {
     if (compChar === 'x' && boardCleared(gameSquares)) {
@@ -56,7 +54,7 @@ const GameContainer = () => {
     else {
       setMessage('');
     }
-  })
+  }, [hasWon, gameSquares, userChar])
 
   // Check board state
   const checkForState = (squares = gameSquares) => {
@@ -130,6 +128,7 @@ const GameContainer = () => {
     setAvailableSquares(availableBoard);
   }
 
+
   // Board is empty
   const boardCleared = (board) => board.every((sq) => sq === '');
 
@@ -195,6 +194,11 @@ const GameContainer = () => {
     // Else, return the maximized move for the next round of recursion.
     return base;
   }
+
+  
+  useEffect(() => {
+    setHasWon(checkForState());
+  }, [gameSquares, checkForState] );
 
   return (
     <div className='gameContainer'>
