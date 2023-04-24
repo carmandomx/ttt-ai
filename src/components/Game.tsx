@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Board from './Board';
 import './Game.css';
 
@@ -11,6 +11,16 @@ const Game: React.FC<GameProps> = ({ playerSymbol }) => {
   const [xIsNext, setXIsNext] = useState(playerSymbol === 'X');
   const [gameOver] = useState(false);
 
+  const handleClick = useCallback((i: number) => {
+    const newSquares = [...squares];
+    if (calculateWinner(newSquares) || newSquares[i]) {
+      return;
+    }
+    newSquares[i] = xIsNext ? playerSymbol : getOpponentSymbol(playerSymbol);
+    setSquares(newSquares);
+    setXIsNext(!xIsNext);
+  }, [squares, xIsNext, playerSymbol]);
+
   useEffect(() => {
     if (!gameOver && !xIsNext && playerSymbol) {
       // Wait a moment before making a move
@@ -20,19 +30,9 @@ const Game: React.FC<GameProps> = ({ playerSymbol }) => {
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [squares, xIsNext, playerSymbol, gameOver]);
+  }, [gameOver, playerSymbol, squares, xIsNext, handleClick]);
 
-  const handleClick = (i: number) => {
-    const newSquares = [...squares];
-    if (calculateWinner(newSquares) || newSquares[i]) {
-      return;
-    }
-    newSquares[i] = xIsNext ? playerSymbol : getOpponentSymbol(playerSymbol);
-    setSquares(newSquares);
-    setXIsNext(!xIsNext);
-  };
-
-  const winner = calculateWinner(squares);
+  const winner = calculateWinner(squares);//update the status
   let status;
   if (winner) {
     status = `Winner: ${winner}`;
@@ -62,7 +62,7 @@ const Game: React.FC<GameProps> = ({ playerSymbol }) => {
 
 export default Game;
 
-function calculateWinner(squares: string[]): string | null {
+function calculateWinner(squares: string[]): string | null {//to know if there's a winner
     const lines = [
       [0, 1, 2],
       [3, 4, 5],
@@ -89,10 +89,12 @@ function calculateWinner(squares: string[]): string | null {
     return squares.every((square) => square !== '');
   }
 
+//getting the opponent symbol
 function getOpponentSymbol(playerSymbol: string) {
   return playerSymbol === 'X' ? 'O' : 'X';
 }
 
+//letting the computer to find the possible best movement to do
 function findBestMove(squares: string[], player: string): number {
     const opponent = player === 'X' ? 'O' : 'X';
   
