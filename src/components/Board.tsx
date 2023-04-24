@@ -1,25 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useGame } from '../hooks/useGame';
 
 interface BoardProps {
   chip: 'X' | 'O';
 }
 
-type BoardState = (null | 'X' | 'O')[][];
-
 const Board: React.FC<BoardProps> = ({ chip }) => {
-  const [board, setBoard] = useState<BoardState>([
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ]);
-
-  const handleClick = (row: number, col: number) => {
-    if (board[row][col] === null) {
-      const newBoard = [...board];
-      newBoard[row][col] = chip;
-      setBoard(newBoard);
-    }
-  };
+    const { board, setBoard, isPlayerTurn, setIsPlayerTurn } = useGame(chip);
+  
+    const handleClick = (row: number, col: number) => {
+      if (board[row][col] === null && isPlayerTurn) {
+        const newBoard = [...board];
+        newBoard[row][col] = chip;
+        setBoard(newBoard);
+        setIsPlayerTurn(false);
+      }
+    };
 
   return (
     <div className="board">
