@@ -1,3 +1,4 @@
-# Components
+# Tic Tac Toe App
 
-You must make the decision on the heirachy of your application, don't overload a component, what does this mean? Whenever you feel that a component is doing too much try to split it into multiples components.
+[Live Preview]
+(https://mellifluous-squirrel-76ec81.netlify.app/)
