@@ -2,31 +2,30 @@ import React, { useState } from 'react';
 import Board from './components/Board';
 import './App.css';
 
-function App() {
-  const [chip, setChip] = useState<string | null>(null);
+const App: React.FC = () => {
+  const [chip, setChip] = useState<'X' | 'O' | null>(null);
+  const [isChipSelected, setIsChipSelected] = useState<boolean>(false);
 
-  if (chip === null) {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <h1>Tik Tak Toe vs A.I.</h1>
-          <p>Please choose your chip:</p>
-          <button onClick={() => setChip('X')}>X</button>
-          <button onClick={() => setChip('O')}>O</button>
-        </header>
-      </div>
-    );
-  }
+  const handleChipSelection = (selectedChip: 'X' | 'O') => {
+    setChip(selectedChip);
+    setIsChipSelected(true);
+  };
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Tik Tak Toe vs A.I.</h1>
-        <p>You have chosen: {chip}</p>
-      </header>
-      <Board chip={chip as 'X' | 'O'} />
+      <h1>TikTakToe vs A.I.</h1>
+      {!isChipSelected && (
+        <div className="chip-selection">
+          <h2>Select your chip:</h2>
+          <button onClick={() => handleChipSelection('X')}>X</button>
+          <button onClick={() => handleChipSelection('O')}>O</button>
+        </div>
+      )}
+      {isChipSelected && (
+        <Board chip={chip as 'X' | 'O'} isChipSelected={isChipSelected} setIsChipSelected={setIsChipSelected} />
+      )}
     </div>
   );
-}
+};
 
 export default App;

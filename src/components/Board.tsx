@@ -1,12 +1,15 @@
 import React from 'react';
 import { useGame } from '../hooks/useGame';
+import '../Board.css'
 
 type BoardProps = {
   chip: 'X' | 'O';
+  isChipSelected: boolean;
+  setIsChipSelected: (value: boolean) => void;
 };
 
-const Board: React.FC<BoardProps> = ({ chip }) => {
-  const { board, setBoard, isPlayerTurn, setIsPlayerTurn, gameOver, gameResult } = useGame(chip);
+const Board: React.FC<BoardProps> = ({ chip, isChipSelected, setIsChipSelected }) => {
+  const { board, setBoard, isPlayerTurn, setIsPlayerTurn, gameOver, gameResult, resetGame } = useGame(chip);
 
   const handleClick = (row: number, col: number) => {
     if (board[row][col] === null && isPlayerTurn && !gameOver) {
@@ -34,7 +37,16 @@ const Board: React.FC<BoardProps> = ({ chip }) => {
           </div>
         ))}
       </div>
-      {gameOver && <div className="result-message">{gameResult}</div>}
+      {gameOver && (
+        <>
+          <div className="result-message">{gameResult}</div>
+          <div className="restart-container">
+  <button className="restart-button" onClick={() => resetGame(() => setIsChipSelected(false))}>
+    Restart
+  </button>
+</div>
+        </>
+      )}
     </div>
   );
 };

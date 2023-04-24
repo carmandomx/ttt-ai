@@ -48,7 +48,7 @@ const makeAiMove = (board: BoardState, chip: 'X' | 'O'): BoardState => {
   
     return board;
   };
-  
+
 export const useGame = (playerChip: 'X' | 'O') => {
     const [board, setBoard] = useState<BoardState>([
       [null, null, null],
@@ -60,7 +60,18 @@ export const useGame = (playerChip: 'X' | 'O') => {
     const [gameOver, setGameOver] = useState<boolean>(false);
     const [gameResult, setGameResult] = useState<string | null>(null);
 
-  
+    const resetGame = (callback: () => void) => {
+        setBoard([
+          [null, null, null],
+          [null, null, null],
+          [null, null, null],
+        ]);
+        setIsPlayerTurn(true);
+        setGameOver(false);
+        setGameResult(null);
+        callback();
+      };
+
     useEffect(() => {
         if (checkWin(board, playerChip)) {
           setGameOver(true);
@@ -80,7 +91,5 @@ export const useGame = (playerChip: 'X' | 'O') => {
         }
       }, [board, aiChip, isPlayerTurn, playerChip]);
       
-  
-      return { board, setBoard, isPlayerTurn, setIsPlayerTurn, gameOver, gameResult };
-
+      return { board, setBoard, isPlayerTurn, setIsPlayerTurn, gameOver, gameResult, resetGame };
   };
